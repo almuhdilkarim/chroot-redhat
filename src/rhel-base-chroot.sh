@@ -1,22 +1,44 @@
 #!/bin/bash
-# Description: Chroot binary and library setup script
-# Author: Tekfik Blogging
+# Description    : Chroot binary and library setup script
+# Orginal Author : Tekfik Blogging
+# Modified       : Al Muhdil Karim
 
-CHROOT_DIR=$1
-CHGROUP=$2
-TARG=$#
+echo '--------------------------------------------------------';
+echo 'Insert Chroot directory, Example : /home/chroot ';
+echo '--------------------------------------------------------';
+read -p 'CHROOT DIRECTORY: ' chrootDir
 
-## Check input args
-if [ $TARG != 2 ];then
-    echo "Bad Input. Execute the script as:"
-    echo "sh chroot-base-setup.sh chroot_dir_location chroot_group_name"
+CHROOT_DIR=$chrootDir
+
+## Check dir args
+if [ -z "${CHROOT_DIR}" ];then
+    echo "Execution Failed:"
+    echo "Chroot directory is empty"
+    echo "please fill this field using path of directory"
     exit 1
 fi
+
+
+echo '--------------------------------------------------------';
+echo 'Create New Unix groups for chroot, Example : chgroups ';
+echo '--------------------------------------------------------';
+read -p 'CHROOT GROUPS: ' chrootGroup
+
+CHGROUP=$chrootGroup
+
+## Check groups args
+if [ -z "${CHGROUP}" ];then
+    echo "Execution Failed:"
+    echo "Chroot Group is empty"
+    echo "Please fill this field using of groups name for chroot users"
+    exit 1
+fi
+
 
 ## Check and setup chroot dir 
 if [ ! -d $CHROOT_DIR ]; then
     mkdir -p $CHROOT_DIR
-    mkdir -p $CHROOT_DIR/{bin,usr,etc,lib64,home,dev}
+    mkdir -p $CHROOT_DIR/{bin,usr,etc,lib64,etc,usr,home,dev}
     cd $CHROOT_DIR/usr
     ln -sf ../bin ./bin
     ln -sf ../lib64 ./lib64
