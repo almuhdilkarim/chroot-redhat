@@ -49,6 +49,9 @@ if [ ! -d $CHROOT_DIR ]; then
     mknod -m 666 $CHROOT_DIR/dev/random c 1 8
     chmod o+t $CHROOT_DIR/dev/null $CHROOT_DIR/dev/tty $CHROOT_DIR/dev/zero $CHROOT_DIR/dev/random
 
+    touch $CHROOT_DIR/etc/profile
+    echo "export PATH=$PATH:/bin" >> $CHROOT_DIR/etc/profile
+    
     #Group setup
     if [[ ! `getent group $CHGROUP 2>/dev/null` ]];then
        groupadd $CHGROUP
