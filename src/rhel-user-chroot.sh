@@ -3,17 +3,55 @@
 # Description: Chroot binary and library setup script
 # Author: Tekfik Blogging
 
-CHROOT_DIR="/data/chroot-ssh"
-CHGROUP="chrootssh"
-USER=$1
-TARG=$#
 
-## Check input args
-if [ $TARG != 1 ];then
-    echo "Bad Input. Modify the variable value of CHROOT_DIR and CHGROUP variables and then execute the script as:"
-    echo "sh chroot-user-setup.sh user_name"
+echo '--------------------------------------------------------';
+echo 'Insert Chroot directory, Example : /home/chroot ';
+echo '--------------------------------------------------------';
+read -p 'CHROOT DIRECTORY: ' chrootDir
+
+CHROOT_DIR=$chrootDir
+
+## Check dir args
+if [ -z "${CHROOT_DIR}" ];then
+    echo "Execution Failed:"
+    echo "Chroot directory is empty"
+    echo "please fill this field using path of directory"
     exit 1
 fi
+
+echo '--------------------------------------------------------';
+echo 'Create New Unix groups for chroot, Example : chgroups ';
+echo '--------------------------------------------------------';
+read -p 'CHROOT GROUPS: ' chrootGroup
+
+CHGROUP=$chrootGroup
+
+## Check groups args
+if [ -z "${CHGROUP}" ];then
+    echo "Execution Failed:"
+    echo "Chroot Group is empty"
+    echo "Please fill this field using of groups name for chroot users"
+    exit 1
+fi
+
+
+echo '--------------------------------------------------------';
+echo ' Create New User for chroot, Example : ana ';
+echo '--------------------------------------------------------';
+read -p 'CHROOT GROUPS: ' chrootUser
+
+USER=$chrootUser
+
+## Check groups args
+if [ -z "${USER}" ];then
+    echo "Execution Failed:"
+    echo "Username Group is empty"
+    echo "Please fill this field using of groups name for chroot users"
+    exit 1
+fi
+
+
+
 
 ## Check chroot dir 
 if ! test -d $CHROOT_DIR -a -d $CHROOT_DIR/bin -a -d $CHROOT_DIR/usr -a -d $CHROOT_DIR/etc -a -d $CHROOT_DIR/lib64 -a -d $CHROOT_DIR/home -a -d $CHROOT_DIR/dev;then
@@ -25,7 +63,7 @@ fi
 if [[ ! -n `id -u $USER 2>/dev/null` ]];then
     echo "Setting up user account $USER"
     sleep 2
-    /usr/sbin/useradd -g $CHGROUP -M -s /bin/bash $USER
+    /usr/sbin/useradd -m -g $USER -G $CHGROUP $USER
     mkdir -p $CHROOT_DIR/home/$USER
     chown $USER:$CHGROUP $CHROOT_DIR/home/$USER
     chmod 700 $CHROOT_DIR/home/$USER
