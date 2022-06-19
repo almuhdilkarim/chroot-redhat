@@ -38,7 +38,7 @@ fi
 ## Check and setup chroot dir 
 if [ ! -d $CHROOT_DIR ]; then
     mkdir -p $CHROOT_DIR
-    mkdir -p $CHROOT_DIR/{bin,usr,etc,lib64,etc,usr,home,dev}
+    mkdir -p $CHROOT_DIR/{bin,usr,etc,lib64,usr,home,dev}
     cd $CHROOT_DIR/usr
     ln -sf ../bin ./bin
     ln -sf ../lib64 ./lib64
