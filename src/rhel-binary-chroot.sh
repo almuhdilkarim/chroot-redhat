@@ -1,17 +1,41 @@
 #!/bin/bash
-# Description: Chroot binary and library setup script
-# Author: Tekfik Blogging
+# Description    : Chroot binary and library setup script
+# Orginal Author : Tekfik Blogging
+# Modified       : Al Muhdil Karim
 
-CHROOT_DIR=$1
-BINARY_PATH=$2
-TARG=$#
 
-## Check input args
-if [ $TARG != 2 ];then
-    echo "Bad Input. Execute the script as:"
-    echo "sh chroot-binary-setup.sh chroot_dir_location binary_path"
+echo '--------------------------------------------------------';
+echo 'Insert Chroot directory, Example : /home/chroot ';
+echo '--------------------------------------------------------';
+read -p 'CHROOT DIRECTORY: ' chrootDir
+
+CHROOT_DIR=$chrootDir
+
+## Check dir args
+if [ -z "${CHROOT_DIR}" ];then
+    echo "Execution Failed:"
+    echo "Chroot directory is empty"
+    echo "please fill this field using path of directory"
     exit 1
 fi
+
+
+echo '--------------------------------------------------------';
+echo 'Insert Binary Path for chroot, Example : /bin/ls ';
+echo '--------------------------------------------------------';
+read -p 'Binary Path: ' BinPath
+
+BINARY_PATH=$BinPath
+
+## Check groups args
+if [ -z "${BINARY_PATH}" ];then
+    echo "Execution Failed:"
+    echo "Binary path is empty"
+    echo "Please fill this field using of path of binary"
+    exit 1
+fi
+
+
 
 ## Check chroot dir 
 if ! test -d $CHROOT_DIR -a -d $CHROOT_DIR/bin -a -d $CHROOT_DIR/usr -a -d $CHROOT_DIR/etc -a -d $CHROOT_DIR/lib64 -a -d $CHROOT_DIR/home -a -d $CHROOT_DIR/dev;then
