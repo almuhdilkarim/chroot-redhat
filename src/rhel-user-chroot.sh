@@ -64,7 +64,7 @@ fi
 if [[ ! -n `id -u $USER 2>/dev/null` ]];then
     echo "Setting up user account $USER"
     sleep 2
-    /usr/sbin/useradd -m -g $USER -G $CHGROUP $USER
+    /usr/sbin/useradd -g $CHGROUP -M -s /bin/bash $USER
     mkdir -p $CHROOT_DIR/home/$USER
     chown $USER:$CHGROUP $CHROOT_DIR/home/$USER
     chmod 700 $CHROOT_DIR/home/$USER
