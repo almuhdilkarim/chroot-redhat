@@ -1,7 +1,8 @@
 
 #!/bin/bash
-# Description: Chroot binary and library setup script
-# Author: Tekfik Blogging
+# Description    : Chroot binary and library setup script
+# Orginal Author : Tekfik Blogging
+# Modified       : Al Muhdil Karim
 
 
 echo '--------------------------------------------------------';
